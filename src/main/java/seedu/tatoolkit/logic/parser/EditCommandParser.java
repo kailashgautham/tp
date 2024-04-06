@@ -12,6 +12,7 @@ import static seedu.tatoolkit.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 import seedu.tatoolkit.commons.core.index.Index;
 import seedu.tatoolkit.logic.commands.EditCommand;
 import seedu.tatoolkit.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.tatoolkit.logic.parser.exceptions.InvalidIntegerException;
 import seedu.tatoolkit.logic.parser.exceptions.ParseException;
 
 /**
@@ -34,9 +35,11 @@ public class EditCommandParser implements Parser<EditCommand> {
         Index index;
 
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            index = ParserUtil.parseIndex(argMultimap.getPreamble(), "person");
+        } catch (InvalidIntegerException pe) {
+            throw new ParseException(pe.getMessage());
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_CLASS_GROUP, PREFIX_PHONE, PREFIX_EMAIL,

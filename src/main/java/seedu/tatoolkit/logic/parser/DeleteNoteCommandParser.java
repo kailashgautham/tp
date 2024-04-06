@@ -8,6 +8,7 @@ import java.util.List;
 
 import seedu.tatoolkit.commons.core.index.Index;
 import seedu.tatoolkit.logic.commands.DeleteNoteCommand;
+import seedu.tatoolkit.logic.parser.exceptions.InvalidIntegerException;
 import seedu.tatoolkit.logic.parser.exceptions.ParseException;
 
 /**
@@ -26,21 +27,23 @@ public class DeleteNoteCommandParser implements Parser<DeleteNoteCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_INDICES);
 
-        Index personIndex;
-        try {
-            personIndex = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    DeleteNoteCommand.MESSAGE_USAGE), pe);
-        }
-
         if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_INDICES)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteNoteCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_INDICES);
-        List<Index> notes = ParserUtil.parseIndices(argMultimap.getValue(PREFIX_INDICES).get());
+        Index personIndex;
+        try {
+            personIndex = ParserUtil.parseIndex(argMultimap.getPreamble(), "person");
+        } catch (ParseException | InvalidIntegerException pe) {
+            throw new ParseException(pe.getMessage());
+        }
 
-        return new DeleteNoteCommand(personIndex, notes);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_INDICES);
+        try {
+            List<Index> notes = ParserUtil.parseIndices(argMultimap.getValue(PREFIX_INDICES).get(), "note");
+            return new DeleteNoteCommand(personIndex, notes);
+        } catch (InvalidIntegerException e) {
+            throw new ParseException(e.getMessage());
+        }
     }
 }

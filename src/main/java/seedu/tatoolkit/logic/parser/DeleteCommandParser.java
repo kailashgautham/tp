@@ -4,6 +4,7 @@ import static seedu.tatoolkit.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.tatoolkit.commons.core.index.Index;
 import seedu.tatoolkit.logic.commands.DeleteCommand;
+import seedu.tatoolkit.logic.parser.exceptions.InvalidIntegerException;
 import seedu.tatoolkit.logic.parser.exceptions.ParseException;
 
 /**
@@ -18,11 +19,12 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      */
     public DeleteCommand parse(String args) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(args);
+            Index index = ParserUtil.parseIndex(args, "person");
             return new DeleteCommand(index);
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        } catch (InvalidIntegerException pe) {
+            throw new ParseException(pe.getMessage());
         }
     }
 

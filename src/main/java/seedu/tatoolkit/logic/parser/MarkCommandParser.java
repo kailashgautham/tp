@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import seedu.tatoolkit.commons.core.LogsCenter;
 import seedu.tatoolkit.commons.core.index.Index;
 import seedu.tatoolkit.logic.commands.MarkCommand;
+import seedu.tatoolkit.logic.parser.exceptions.InvalidIntegerException;
 import seedu.tatoolkit.logic.parser.exceptions.ParseException;
 import seedu.tatoolkit.model.attendance.Week;
 
@@ -42,11 +43,17 @@ public class MarkCommandParser implements Parser<MarkCommand> {
         }
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_WEEK, PREFIX_PRESENT, PREFIX_ABSENT);
         Week week = ParserUtil.parseWeek(argMultimap.getValue(PREFIX_WEEK).get());
-        List<Index> presentIndices = ParserUtil.parseIndices(argMultimap.getValue(PREFIX_PRESENT).orElse(""));
-        List<Index> absentIndices = ParserUtil.parseIndices(argMultimap.getValue(PREFIX_ABSENT).orElse(""));
-        if (presentIndices.isEmpty() && absentIndices.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+        try {
+            List<Index> presentIndices = ParserUtil.parseIndices(
+                    argMultimap.getValue(PREFIX_PRESENT).orElse(""), "person");
+            List<Index> absentIndices = ParserUtil.parseIndices(
+                    argMultimap.getValue(PREFIX_ABSENT).orElse(""), "person");
+            if (presentIndices.isEmpty() && absentIndices.isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+            }
+            return new MarkCommand(week, presentIndices, absentIndices);
+        } catch (InvalidIntegerException e) {
+            throw new ParseException(e.getMessage());
         }
-        return new MarkCommand(week, presentIndices, absentIndices);
     }
 }

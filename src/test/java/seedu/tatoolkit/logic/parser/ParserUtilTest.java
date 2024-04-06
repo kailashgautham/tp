@@ -11,6 +11,7 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 import seedu.tatoolkit.commons.core.index.Index;
+import seedu.tatoolkit.logic.parser.exceptions.InvalidIntegerException;
 import seedu.tatoolkit.logic.parser.exceptions.ParseException;
 import seedu.tatoolkit.model.attendance.Week;
 import seedu.tatoolkit.model.person.Email;
@@ -31,24 +32,26 @@ public class ParserUtilTest {
 
     private static final String WHITESPACE = " \t\r\n";
 
+    private String indexType = "person";
+
     @Test
     public void parseIndex_invalidInput_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndex("10 a"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseIndex("10 a", indexType));
     }
 
     @Test
-    public void parseIndex_outOfRangeInput_throwsParseException() {
-        assertThrows(ParseException.class, MESSAGE_INVALID_INDEX, ()
-            -> ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1)));
+    public void parseIndex_outOfRangeInput_throwsInvalidIntegerException() {
+        assertThrows(InvalidIntegerException.class, String.format(MESSAGE_INVALID_INDEX, indexType), ()
+            -> ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1), indexType));
     }
 
     @Test
     public void parseIndex_validInput_success() throws Exception {
         // No whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("1"));
+        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("1", indexType));
 
         // Leading and trailing whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
+        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  ", indexType));
     }
 
     @Test
@@ -148,36 +151,36 @@ public class ParserUtilTest {
 
     @Test
     public void parseIndices_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> ParserUtil.parseIndices(null));
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseIndices(null, indexType));
     }
 
     @Test
     public void parseIndices_invalidInput_throwsParseException() {
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndices("a b"));
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndices("1, b"));
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndices("1 2 3"));
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndices("   "));
-        assertThrows(ParseException.class, () -> ParserUtil.parseIndices(" ,,  "));
+        assertThrows(ParseException.class, () -> ParserUtil.parseIndices("a b", indexType));
+        assertThrows(ParseException.class, () -> ParserUtil.parseIndices("1, b", indexType));
+        assertThrows(ParseException.class, () -> ParserUtil.parseIndices("1 2 3", indexType));
+        assertThrows(ParseException.class, () -> ParserUtil.parseIndices("   ", indexType));
+        assertThrows(ParseException.class, () -> ParserUtil.parseIndices(" ,,  ", indexType));
     }
 
     @Test
     public void parseIndices_outOfRangeInput_throwsParseException() {
-        assertThrows(ParseException.class, MESSAGE_INVALID_INDEX, ()
-                -> ParserUtil.parseIndices(Long.toString(Integer.MAX_VALUE + 1)));
+        assertThrows(InvalidIntegerException.class, String.format(MESSAGE_INVALID_INDEX, indexType), ()
+                -> ParserUtil.parseIndices(Long.toString(Integer.MAX_VALUE + 1), indexType));
 
-        assertThrows(ParseException.class, MESSAGE_INVALID_INDEX, ()
-                -> ParserUtil.parseIndices("1, " + Long.toString(Integer.MAX_VALUE + 1)));
+        assertThrows(InvalidIntegerException.class, String.format(MESSAGE_INVALID_INDEX, indexType), ()
+                -> ParserUtil.parseIndices("1, " + Long.toString(Integer.MAX_VALUE + 1), indexType));
     }
 
     @Test
     public void parseIndices_validInput_success() throws Exception {
         // No whitespaces
-        assertEquals(INDEX_LIST, ParserUtil.parseIndices("1,2,3"));
+        assertEquals(INDEX_LIST, ParserUtil.parseIndices("1,2,3", indexType));
 
         // Leading and trailing whitespaces
-        assertEquals(INDEX_LIST, ParserUtil.parseIndices(" 1 , 2 , 3 "));
+        assertEquals(INDEX_LIST, ParserUtil.parseIndices(" 1 , 2 , 3 ", indexType));
 
         // Trailing comma
-        assertEquals(INDEX_LIST, ParserUtil.parseIndices(" 1 , 2 , 3, "));
+        assertEquals(INDEX_LIST, ParserUtil.parseIndices(" 1 , 2 , 3, ", indexType));
     }
 }

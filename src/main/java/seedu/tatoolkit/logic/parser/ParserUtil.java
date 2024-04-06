@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 
 import seedu.tatoolkit.commons.core.index.Index;
 import seedu.tatoolkit.commons.util.StringUtil;
+import seedu.tatoolkit.logic.parser.exceptions.InvalidIntegerException;
 import seedu.tatoolkit.logic.parser.exceptions.ParseException;
 import seedu.tatoolkit.model.attendance.Week;
 import seedu.tatoolkit.model.person.ClassGroup;
@@ -25,19 +26,25 @@ import seedu.tatoolkit.model.person.Telegram;
  */
 public class ParserUtil {
 
-    public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_INDEX_INPUT =
+            "The %s index provided is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_INDEX = "The %s index provided is invalid.";
     public static final String MESSAGE_NO_VALID_INDICES = "No valid indices were provided.";
     public static final String MESSAGE_DUPLICATE_INDICES = "Duplicate indices were provided.";
 
     /**
-     * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
-     * trimmed.
+     * Parses {@code oneBasedIndex} of type {@code inputType} into an {@code Index} and returns it.
+     * Leading and trailing whitespaces will be trimmed.
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
      */
-    public static Index parseIndex(String oneBasedIndex) throws ParseException {
+    public static Index parseIndex(String oneBasedIndex, String indexType)
+            throws ParseException, InvalidIntegerException {
         String trimmedIndex = oneBasedIndex.trim();
+        if (!trimmedIndex.matches("-?\\d+")) {
+            throw new ParseException(String.format(MESSAGE_INVALID_INDEX_INPUT, indexType));
+        }
         if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
-            throw new ParseException(MESSAGE_INVALID_INDEX);
+            throw new InvalidIntegerException(String.format(MESSAGE_INVALID_INDEX, indexType));
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
@@ -165,8 +172,8 @@ public class ParserUtil {
         String trimmedWeek = week.trim();
         Index weekIndex;
         try {
-            weekIndex = parseIndex(trimmedWeek);
-        } catch (ParseException e) {
+            weekIndex = parseIndex(trimmedWeek, "week");
+        } catch (ParseException | InvalidIntegerException e) {
             throw new ParseException(Week.MESSAGE_CONSTRAINTS);
         }
         if (!Week.isValidWeek(weekIndex)) {
@@ -176,12 +183,13 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String indices} into a {@code List<Index>}.
+     * Parses a {@code String indices} of type {@code String inputType} into a {@code List<Index>}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code indices} is invalid.
      */
-    public static List<Index> parseIndices(String indices) throws ParseException {
+    public static List<Index> parseIndices(String indices, String indexType)
+            throws ParseException, InvalidIntegerException {
         if (indices.isEmpty()) {
             return new ArrayList<>();
         }
@@ -192,7 +200,7 @@ public class ParserUtil {
 
         List<Index> indexList = new ArrayList<>();
         for (String index : trimmedIndices) {
-            Index parsedIndex = parseIndex(index);
+            Index parsedIndex = parseIndex(index, indexType);
             if (!indexList.contains(parsedIndex)) {
                 indexList.add(parsedIndex);
             } else {

@@ -23,6 +23,7 @@ import static seedu.tatoolkit.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.tatoolkit.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.tatoolkit.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.tatoolkit.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.tatoolkit.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.tatoolkit.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.tatoolkit.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.tatoolkit.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
@@ -45,6 +46,8 @@ public class EditCommandParserTest {
 
     private EditCommandParser parser = new EditCommandParser();
 
+    private String indexType = "person";
+
     @Test
     public void parse_missingParts_failure() {
         // no index specified
@@ -60,10 +63,10 @@ public class EditCommandParserTest {
     @Test
     public void parse_invalidPreamble_failure() {
         // negative index
-        assertParseFailure(parser, "-5" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-5" + NAME_DESC_AMY, String.format(MESSAGE_INVALID_INDEX, indexType));
 
         // zero index
-        assertParseFailure(parser, "0" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "0" + NAME_DESC_AMY, String.format(MESSAGE_INVALID_INDEX, indexType));
 
         // invalid arguments being parsed as preamble
         assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);

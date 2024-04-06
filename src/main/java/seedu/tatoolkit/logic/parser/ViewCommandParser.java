@@ -1,10 +1,10 @@
 package seedu.tatoolkit.logic.parser;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.tatoolkit.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.tatoolkit.commons.core.index.Index;
 import seedu.tatoolkit.logic.commands.ViewCommand;
+import seedu.tatoolkit.logic.parser.exceptions.InvalidIntegerException;
 import seedu.tatoolkit.logic.parser.exceptions.ParseException;
 
 /**
@@ -25,10 +25,9 @@ public class ViewCommandParser implements Parser<ViewCommand> {
         requireNonNull(args);
         Index index;
         try {
-            index = ParserUtil.parseIndex(args);
-        } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE), pe);
+            index = ParserUtil.parseIndex(args, "person");
+        } catch (ParseException | InvalidIntegerException pe) {
+            throw new ParseException(pe.getMessage());
         }
         if (index.getOneBased() <= 0) {
             throw new ParseException(MESSAGE_ONE_BASED_INDEXING);

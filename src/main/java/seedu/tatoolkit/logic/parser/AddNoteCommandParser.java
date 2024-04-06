@@ -6,6 +6,7 @@ import static seedu.tatoolkit.logic.parser.CliSyntax.PREFIX_NOTE;
 
 import seedu.tatoolkit.commons.core.index.Index;
 import seedu.tatoolkit.logic.commands.AddNoteCommand;
+import seedu.tatoolkit.logic.parser.exceptions.InvalidIntegerException;
 import seedu.tatoolkit.logic.parser.exceptions.ParseException;
 import seedu.tatoolkit.model.person.Note;
 
@@ -25,15 +26,15 @@ public class AddNoteCommandParser implements Parser<AddNoteCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NOTE);
 
-        Index index;
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddNoteCommand.MESSAGE_USAGE), pe);
-        }
-
         if (!ParserUtil.arePrefixesPresent(argMultimap, PREFIX_NOTE)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddNoteCommand.MESSAGE_USAGE));
+        }
+
+        Index index;
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble(), "person");
+        } catch (ParseException | InvalidIntegerException pe) {
+            throw new ParseException(pe.getMessage());
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NOTE);

@@ -227,7 +227,7 @@ Step 2. The user executes `dc 5` command to delete the 5th person in the TA Tool
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `ac n/David …​` to add a new person. The `ac` command also calls `Model#commitTaToolkit()`, causing another modified TA Toolkit state to be saved into the `taToolkitStateList`.
+Step 3. The user executes `ac n=David …​` to add a new person. The `ac` command also calls `Model#commitTaToolkit()`, causing another modified TA Toolkit state to be saved into the `taToolkitStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
@@ -275,7 +275,7 @@ Step 5. The user then decides to execute the command `ls`. Commands that do not 
 
 <puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
 
-Step 6. The user executes `clear`, which calls `Model#commitTaToolkit()`. Since the `currentStatePointer` is not pointing at the end of the `taToolkitStateList`, all TA Toolkit states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitTaToolkit()`. Since the `currentStatePointer` is not pointing at the end of the `taToolkitStateList`, all TA Toolkit states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n=David …​` command. This is the behavior that most modern desktop applications follow.
 
 <puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
 
@@ -666,8 +666,6 @@ be able to accomplish most of the tasks faster using commands than using the mou
 5.  The applications does not support concurrent usage by multiple users.
 6.  The application does not offer support for languages aside from English.
 7.  The application should be able to handle most common user input errors and provide meaningful error messages.
-
-*{More to be added}*
 
 ### Glossary
 

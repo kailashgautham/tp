@@ -14,10 +14,10 @@ box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 end box
 
-[-> LogicManager : execute("uc 1 n/Harry Potter p/98765432")
+[-> LogicManager : execute("uc 1 n=Harry Potter p=98765432")
 activate LogicManager
 
-LogicManager -> TaToolkitParser : parseCommand("uc 1 n/Harry Potter p/98765432")
+LogicManager -> TaToolkitParser : parseCommand("uc 1 n=Harry Potter p=98765432")
 activate TaToolkitParser
 
 create EditCommandParser
@@ -27,7 +27,7 @@ activate EditCommandParser
 EditCommandParser --> TaToolkitParser
 deactivate EditCommandParser
 
-TaToolkitParser -> EditCommandParser : parse("uc 1 n/Harry Potter p/98765432")
+TaToolkitParser -> EditCommandParser : parse("uc 1 n=Harry Potter p=98765432")
 activate EditCommandParser
 
 create EditCommand

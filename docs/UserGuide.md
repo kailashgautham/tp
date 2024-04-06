@@ -139,7 +139,7 @@ if your computer is running Linux.
 
    * `list` : Lists all contacts.
 
-   * `ac n/John Doe c/F14-3 p/98765432 e/johnd@example.com t/@johndoe g/johnDoeGithub` : Adds a student named `John Doe` to the TA Toolkit.
+   * `ac n=John Doe c=F14-3 p=98765432 e=johnd@example.com t=@johndoe g=johnDoeGithub` : Adds a student named `John Doe` to the TA Toolkit.
 
    * `dc 3` : Deletes the 3rd contact shown in the current list.
 
@@ -182,17 +182,17 @@ The following parameters are used for commands:
 |---------------|--------|------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
 | INDEX         | -      | Positive integers only                                                                                           | `1`, `2`, `3`                                   |
 | KEYWORD       | -      | Alphanumeric only                                                                                                | `Alex`, `Bernice`                               |
-| NAME          | n/     | Alphanumeric, can contain multiple words                                                                         | `Alex Yeoh`, `Bernice Yu`                       |
-| PHONE_NUMBER  | p/     | Numeric, minimum length of 3 digits                                                                              | `99999999`, `88888888`                          |
-| TELEGRAM      | t/     | Starts with @, followed by alphanumeric characters or underscores                                                | `@nus_cs2103` , `@johnDoe`                      |
-| EMAIL         | e/     | Valid email format only                                                                                          | `damithch@comp.nus.edu.sg`, `dcsdcr@nus.edu.sg` |
-| GITHUB        | g/     | Consists of alphanumeric characters, underscores, periods, and hyphens                                           | `johnDoe`, `alice-yu`                           |
-| CLASS_GROUP   | c/     | Consists of alphanumeric characters, separated by hyphens                                                        | `CS2100-T10`, `F14-3-2`                         |
-| NOTE          | note/  | Consists of a alphanumeric characters and basic punctuation (periods, commas, exclamation marks, question marks) | `Proficient in Java!`, `Beginner to Python.`    |
-| NOTE_INDEX    | i/     | Positive integers only                                                                                           | `1`, `2`, `3`                                   |
-| WEEK          | w/     | Positive integers from 1 - 13 only                                                                               | `1`, `2`, `3`                                   |
-| PRESENT_INDEX | pre/   | Positive integers only                                                                                           | `1`, `2`, `3`                                   |
-| ABSENT_INDEX  | abs/   | Positive integers only                                                                                           | `1`, `2`, `3`                                   |
+| NAME          | n=     | Alphanumeric, can contain multiple words                                                                         | `Alex Yeoh`, `Bernice Yu`                       |
+| PHONE_NUMBER  | p=     | Numeric, minimum length of 3 digits                                                                              | `99999999`, `88888888`                          |
+| TELEGRAM      | t=     | Starts with @, followed by alphanumeric characters or underscores                                                | `@nus_cs2103` , `@johnDoe`                      |
+| EMAIL         | e=     | Valid email format only                                                                                          | `damithch@comp.nus.edu.sg`, `dcsdcr@nus.edu.sg` |
+| GITHUB        | g=     | Consists of alphanumeric characters, underscores, periods, and hyphens                                           | `johnDoe`, `alice-yu`                           |
+| CLASS_GROUP   | c=     | Consists of alphanumeric characters, separated by hyphens                                                        | `CS2100-T10`, `F14-3-2`                         |
+| NOTE          | note=  | Consists of a alphanumeric characters and basic punctuation (periods, commas, exclamation marks, question marks) | `Proficient in Java!`, `Beginner to Python.`    |
+| NOTE_INDEX    | i=     | Positive integers only                                                                                           | `1`, `2`, `3`                                   |
+| WEEK          | w=     | Positive integers from 1 - 13 only                                                                               | `1`, `2`, `3`                                   |
+| PRESENT_INDEX | pre=   | Positive integers only                                                                                           | `1`, `2`, `3`                                   |
+| ABSENT_INDEX  | abs=   | Positive integers only                                                                                           | `1`, `2`, `3`                                   |
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -205,13 +205,13 @@ The following parameters are used for commands:
 * Commands are case-sensitive.
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `ac n/NAME`, `NAME` is a parameter which can be used as `ac n/John Doe`.
+  e.g. in `ac n=NAME`, `NAME` is a parameter which can be used as `ac n=John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g. `n/NAME [t/TELEGRAM]` can be used as `n/John Doe t/@johndoe` or as `n/John Doe`.
+  e.g. `n=NAME [t=TELEGRAM]` can be used as `n=John Doe t=@johndoe` or as `n=John Doe`.
 
 * Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+  e.g. if the command specifies `n=NAME p=PHONE_NUMBER`, `p=PHONE_NUMBER n=NAME` is also acceptable.
 
 * Items with … after them can be used multiple times (1 or more).<br>
   For example, the `ls CLASS_GROUP` command can be used to search 1 `CLASS_GROUP` like `ls T10`, or 2 `CLASS_GROUP`s like `ls T10 T20`.
@@ -237,12 +237,12 @@ Format: `help`
 
 This helps you to add a person to TA Toolkit.
 
-Format: `ac n/NAME c/CLASS_GROUP e/EMAIL [p/PHONE_NUMBER] [t/TELEGRAM] [g/GITHUB]`
+Format: `ac n=NAME c=CLASS_GROUP e=EMAIL [p=PHONE_NUMBER] [t=TELEGRAM] [g=GITHUB]`
 
 * When adding a contact, the contact's EMAIL, PHONE_NUMBER, TELEGRAM, GITHUB must be unique compared to every other person in TA Toolkit.
 
 Examples:
-* `ac n/John Doe c/F14-3 p/98765432 e/johnd@example.com t/@johndoe g/johnDoeGithub` This adds a new member named `John Doe` with class_group `F14-3`, phone number `98765432`, email `johnd@example.com`, telegram
+* `ac n=John Doe c=F14-3 p=98765432 e=johnd@example.com t=@johndoe g=johnDoeGithub` This adds a new member named `John Doe` with class_group `F14-3`, phone number `98765432`, email `johnd@example.com`, telegram
 handle `@johndoe` and github `johnDoeGithub` to the list of contacts.
 
 ![Add_Contact](images/ac_example.png)
@@ -251,7 +251,7 @@ handle `@johndoe` and github `johnDoeGithub` to the list of contacts.
 
 This helps you to update the contact details of an existing person in TA Toolkit.
 
-Format: `uc INDEX [n/NAME] [c/CLASS_GROUP] [e/EMAIL] [p/PHONE_NUMBER] [t/TELEGRAM] [g/GITHUB]`
+Format: `uc INDEX [n=NAME] [c=CLASS_GROUP] [e=EMAIL] [p=PHONE_NUMBER] [t=TELEGRAM] [g=GITHUB]`
 
 * Updates the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -260,8 +260,8 @@ Format: `uc INDEX [n/NAME] [c/CLASS_GROUP] [e/EMAIL] [p/PHONE_NUMBER] [t/TELEGRA
 * When updating any field, `EMAIL`, `PHONE_NUMBER`, `TELEGRAM`, `GITHUB` must be unique compared to every other person.
 
 Examples:
-*  `uc 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears the Telegram field.
-*  `uc 6 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 6th person to be `91234567` and `johndoe@example.com` respectively.
+*  `uc 2 n=Betsy Crower t=` Edits the name of the 2nd person to be `Betsy Crower` and clears the Telegram field.
+*  `uc 6 p=91234567 e=johndoe@example.com` Edits the phone number and email address of the 6th person to be `91234567` and `johndoe@example.com` respectively.
 
 ![Update_Contact](images/uc_example.png)
 
@@ -324,37 +324,37 @@ Examples:
 
 This helps you to add note to a specified person in TA Toolkit.
 
-Format: `an INDEX note/NOTE`
+Format: `an INDEX note=NOTE`
 
 * `INDEX` refers to the index number shown in the displayed person list.
 * `INDEX` **must be a positive integer** 1, 2, 3, …​
 * `NOTE` **must contain only alphanumeric characters and punctuation** hardworking, sleepy, …​
 
 Examples:
-* `an 1 note/very hardworking student!` adds a note of `very hardworking student!` to the 1st person in the TA Toolkit.
+* `an 1 note=very hardworking student!` adds a note of `very hardworking student!` to the 1st person in the TA Toolkit.
 
-  ![result for 'an 1 note/very hardworking student!'](images/an_example.png)
+  ![result for 'an 1 note=very hardworking student!'](images/an_example.png)
 
 ### Deleting note from a person : `dn`
 
 Delete a note from a specified index of a specified person from the TA Toolkit.
 
-Format: `dn INDEX i/NOTE_INDEX...`
+Format: `dn INDEX i=NOTE_INDEX...`
 
 * `INDEX` refers to the index number shown in the displayed person list.
 * `NOTEINDEX` refers to the index of the note within a person.
 * `INDEX` and `NOTEINDEX` **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `dn 1 i/1` deletes the first note from the 1st person in the TA Toolkit.
+* `dn 1 i=1` deletes the first note from the 1st person in the TA Toolkit.
 
 ### Marking attendance : `ma`
 
 Marks the attendance of a student as absent or present.
 
-Format: `ma w/WEEK [pre/PRESENT_INDEX...] [abs/ABSENT_INDEX...]`
+Format: `ma w=WEEK [pre=PRESENT_INDEX...] [abs=ABSENT_INDEX...]`
 
-* Person indices under `pre/` will be marked as present. Person indices under `abs/` will be marked as absent.
+* Person indices under `pre=` will be marked as present. Person indices under `abs=` will be marked as absent.
 * When a person contact is created, he will be assumed to be present for all weeks.
 * This command will overwrite the existing attendance for the students.
 * No duplicate indices are allowed in `PRESENT_INDEX` and `ABSENT_INDEX`.
@@ -362,8 +362,8 @@ Format: `ma w/WEEK [pre/PRESENT_INDEX...] [abs/ABSENT_INDEX...]`
 * At least one optional parameter must be present in the command.
 
 Examples:
-* `ma w/1 abs/1,2` marks the 1st and 2nd persons in the displayed persons list as absent.
-  ![result for 'ma w/1 abs/1,2'](images/ma_example.png)
+* `ma w=1 abs=1,2` marks the 1st and 2nd persons in the displayed persons list as absent.
+  ![result for 'ma w=1 abs=1,2'](images/ma_example.png)
 
 <box type="info" seamless>
 
@@ -480,16 +480,16 @@ To reset the displayed person list, you can refer to the [`ls`](#listing-persons
 
 | Action                                             | Format, Examples                                                                                                                                                        |
 |----------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [**Add**](#adding-a-person-ac)                     | `ac n/NAME c/CLASS_GROUP e/EMAIL p/PHONE_NUMBER [t/TELEGRAM] [g/GITHUB]` <br> e.g., `ac c/T10-2 n/James Ho p/22224444 e/jamesho@example.com t/@jamesho g/jameshoGithub` |
-| [**Add Note**](#adding-note-to-a-person-an)        | `an INDEX note/NOTE` <br> e.g., `an 1 note/Very interested in Assembly`                                                                                                 |
+| [**Add**](#adding-a-person-ac)                     | `ac n=NAME c=CLASS_GROUP e=EMAIL p=PHONE_NUMBER [t=TELEGRAM] [g=GITHUB]` <br> e.g., `ac c=T10-2 n=James Ho p=22224444 e=jamesho@example.com t=@jamesho g=jameshoGithub` |
+| [**Add Note**](#adding-note-to-a-person-an)        | `an INDEX note=NOTE` <br> e.g., `an 1 note=Very interested in Assembly`                                                                                                 |
 | [**Clear**](#clearing-all-entries-clear)           | `clear`                                                                                                                                                                 |
 | [**Delete**](#deleting-a-person-dc)                | `dc INDEX`<br> e.g., `dc 3`                                                                                                                                             |
-| [**Delete Note**](#deleting-note-from-a-person-dn) | `dn INDEX i/NOTEINDEX...`<br> e.g., `dn 1 i/1,2`                                                                                                                        |
+| [**Delete Note**](#deleting-note-from-a-person-dn) | `dn INDEX i=NOTEINDEX...`<br> e.g., `dn 1 i=1,2`                                                                                                                        |
 | [**Find**](#locating-persons-by-name-find)         | `find KEYWORD...`<br> e.g., `find James Jake`                                                                                                                           |
 | [**Help**](#viewing-help-help)                     | `help`                                                                                                                                                                  |
 | [**List**](#listing-persons-ls)                    | `ls [CLASS_GROUP...]` <br> e.g., `ls F14`                                                                                                                               |
-| [**Mark Attendance**](#marking-attendance-ma)      | `ma w/WEEK [pre/PRESENT_INDEX] [abs/ABSENT_INDEX]` <br> e.g.,`ma w/1 pre/1,2 abs/3`                                                                                     |
-| [**Update**](#updating-a-person-uc)                | `uc INDEX [n/NAME] [c/CLASS_GROUP] [e/EMAIL] [p/PHONE_NUMBER] [t/TELEGRAM] [g/GITHUB]` <br> e.g.,`uc 2 n/James Lee e/jameslee@example.com`                          |
+| [**Mark Attendance**](#marking-attendance-ma)      | `ma w=WEEK [pre=PRESENT_INDEX] [abs=ABSENT_INDEX]` <br> e.g.,`ma w=1 pre=1,2 abs=3`                                                                                     |
+| [**Update**](#updating-a-person-uc)                | `uc INDEX [n=NAME] [c=CLASS_GROUP] [e=EMAIL] [p=PHONE_NUMBER] [t=TELEGRAM] [g=GITHUB]` <br> e.g.,`uc 2 n=James Lee e=jameslee@example.com`                          |
 | [**View**](#viewing-a-person-view)                 | `view INDEX`                                                                                                                                                            |
 
 --------------------------------------------------------------------------------------------------------------------
